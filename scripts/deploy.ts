@@ -16,23 +16,19 @@ async function main() {
   const ibcIdentifier = await IBCIdentifier.deploy();
   const ibcIdentifierDeployed = await ibcIdentifier.deployed();
 
-  console.log("ibcIdentifier "+ibcIdentifierDeployed.address)
   const IBCHost = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/IBCHost.sol:IBCHost", {
     libraries: {IBCIdentifier: ibcIdentifierDeployed.address},
   });
   const ibcHost = await IBCHost.deploy();
   const ibcHostDeployed = await ibcHost.deployed();
-  console.log("ibcHost "+ibcHostDeployed.address)
 
   const IBCClient = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/IBCClient.sol:IBCClient")
   const ibcClient = await IBCClient.deploy();
   const ibcClientDeployed = await ibcClient.deployed();
-  console.log("2")
 
   const IBCConnection = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/IBCConnection.sol:IBCConnection", {libraries: {IBCClient: ibcClientDeployed.address}})
   const ibcConnection = await IBCConnection.deploy();
   const ibcConnectionDeployed = await ibcConnection.deployed();
-  console.log("3")
 
   const IBCChannel = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/IBCChannel.sol:IBCChannel", {
     libraries: {
@@ -42,12 +38,10 @@ async function main() {
   });
   const ibcChannel = await IBCChannel.deploy();
   const ibcChannelDeployed = await ibcChannel.deployed();
-  console.log("4")
 
   const IBCMsgs = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/IBCMsgs.sol:IBCMsgs")
   const ibcMsgs = await IBCMsgs.deploy();
   const ibcMsgsDeployed = await ibcMsgs.deployed();
-  console.log("5")
 
   const IBCHandler = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/IBCHandler.sol:IBCHandler",
     {
@@ -60,22 +54,18 @@ async function main() {
     });
   const ibcHandler = await IBCHandler.deploy(ibcHostDeployed.address);
   const ibcHandlerDeployed = await ibcHandler.deployed();
-  console.log("6")
 
   const MockClient = await ethers.getContractFactory("@hyperledger-labs/yui-ibc-solidity/contracts/core/MockClient.sol:MockClient");
   const mockClient = await MockClient.deploy();
   const mockClientDeployed = await mockClient.deployed();
-  console.log("7")
 
   const MiniToken = await ethers.getContractFactory("MiniToken");
   const miniToken = await MiniToken.deploy(ibcHostDeployed.address, ibcHandlerDeployed.address);
   const miniTokenDeployed = await miniToken.deployed();
-  console.log("8")
 
   await ibcHost.setIBCModule(ibcHandlerDeployed.address)
   await ibcHandler.bindPort(PortTransfer, miniTokenDeployed.address)
   await ibcHandler.registerClient(MockClientType, mockClientDeployed.address)
-  console.log("9")
 
 }
 
