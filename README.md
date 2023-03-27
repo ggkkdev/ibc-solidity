@@ -2,5 +2,5 @@
 
 ```
 make setup
-
+make transfer
 ```
