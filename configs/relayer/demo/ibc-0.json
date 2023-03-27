@@ -1,0 +1,15 @@
+{
+  "chain": {
+    "@type": "/relayer.chains.ethereum.config.ChainConfig",
+    "chain_id": "ibc0",
+    "eth_chain_id": 2018,
+    "rpc_addr": "http://localhost:8645",
+    "hdw_mnemonic": "math razor capable expose worth grape metal sunset metal sudden usage scheme",
+    "hdw_path": "m/44'/60'/0'/0/0",
+    "ibc_host_address": "0xdD5109D05Ac357E446992a60E64764041A0E8529",
+    "ibc_handler_address": "0xaa43d337145E8930d01cb4E60Abf6595C692921E"
+  },
+  "prover": {
+    "@type": "/relayer.provers.mock.config.ProverConfig"
+  }
+}
